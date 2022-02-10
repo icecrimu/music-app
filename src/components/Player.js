@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faAngleLeft,
   faAngleRight,
-  faPlay
+  faPlay,
+  faPause
 } from "@fortawesome/free-solid-svg-icons"
 
 export default function Player({ currentSong }) {
@@ -53,7 +54,7 @@ export default function Player({ currentSong }) {
           onClick={handlePlaySong}
           className="play"
           size="2x"
-          icon={faPlay}
+          icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon
           className="skip-forward"
