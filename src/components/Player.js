@@ -9,7 +9,10 @@ import {
 export default function Player({ currentSong }) {
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
-
+  const [songInfo, setSongInfo] = useState({
+    currentTime: null,
+    duration: null
+  })
   function handlePlaySong() {
     if (isPlaying) {
       audioRef.current.pause()
@@ -19,12 +22,20 @@ export default function Player({ currentSong }) {
       setIsPlaying(!isPlaying)
     }
   }
+  function handleTimeUpdate(e) {
+    const currentTime = e.target.currentTime
+    const duration = e.target.duration
+    setSongInfo({ ...songInfo, currentTime, duration })
+  }
+  function getTime(time) {
+    return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
+  }
   return (
     <div className="player-container">
       <div className="time-control">
-        <p>Start time</p>
+        <p>{getTime(songInfo.currentTime)}</p>
         <input type="range" />
-        <p>End time</p>
+        <p>{getTime(songInfo.duration)}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon className="skip-back" size="2x" icon={faAngleLeft} />
@@ -40,7 +51,12 @@ export default function Player({ currentSong }) {
           icon={faAngleRight}
         />
       </div>
-      <audio ref={audioRef} src={currentSong.audio}></audio>
+      <audio
+        onLoadedMetadata={handleTimeUpdate}
+        onTimeUpdate={handleTimeUpdate}
+        ref={audioRef}
+        src={currentSong.audio}
+      ></audio>
     </div>
   )
 }
