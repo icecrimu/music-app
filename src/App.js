@@ -6,11 +6,11 @@ import Data from "./Data"
 
 function App() {
   const [songs, setSongs] = useState(Data())
-  const [currentSong, setCurrectSong] = useState(songs[0])
+  const [currentSong, setCurrentSong] = useState(songs[0])
   return (
     <div className="App">
       <Song currentSong={currentSong} />
-      <Player />
+      <Player currentSong={currentSong} />
     </div>
   )
 }
