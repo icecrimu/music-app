@@ -10,8 +10,8 @@ export default function Player({ currentSong }) {
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [songInfo, setSongInfo] = useState({
-    currentTime: null,
-    duration: null
+    currentTime: 0,
+    duration: 0
   })
   function handlePlaySong() {
     if (isPlaying) {
@@ -30,11 +30,21 @@ export default function Player({ currentSong }) {
   function getTime(time) {
     return Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
   }
+  function handleSlider(e) {
+    audioRef.current.currentTime = e.target.value
+    setSongInfo({ ...songInfo, currentTime: e.target.value })
+  }
   return (
     <div className="player-container">
       <div className="time-control">
         <p>{getTime(songInfo.currentTime)}</p>
-        <input type="range" />
+        <input
+          onChange={handleSlider}
+          min={0}
+          max={songInfo.duration}
+          value={songInfo.currentTime}
+          type="range"
+        />
         <p>{getTime(songInfo.duration)}</p>
       </div>
       <div className="play-control">
