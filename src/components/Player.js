@@ -39,7 +39,7 @@ export default function Player({
         <input
           onChange={handleSlider}
           min={0}
-          max={songInfo.duration}
+          max={songInfo.duration || 0}
           value={songInfo.currentTime}
           type="range"
         />

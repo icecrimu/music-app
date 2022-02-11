@@ -3,7 +3,7 @@ import "./styles/app.scss"
 import Song from "./components/Song"
 import Player from "./components/Player"
 import Library from "./components/Library"
-
+import Nav from "./components/Nav"
 import Data from "./Data"
 
 export const LibraryContext = React.createContext()
@@ -21,6 +21,8 @@ function App() {
 
   const [isPlaying, setIsPlaying] = useState(false)
 
+  const [libraryStatus, setLibraryStatus] = useState(false)
+
   const libraryContextValue = {
     setCurrentSong,
     songs,
@@ -37,6 +39,10 @@ function App() {
   return (
     <LibraryContext.Provider value={libraryContextValue}>
       <div className="App">
+        <Nav
+          libraryStatus={libraryStatus}
+          setLibraryStatus={setLibraryStatus}
+        />
         <Song currentSong={currentSong} />
         <Player
           audioRef={audioRef}
@@ -46,7 +52,7 @@ function App() {
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
         />
-        <Library songs={songs} />
+        <Library songs={songs} libraryStatus={libraryStatus} />
         <audio
           onLoadedMetadata={handleTimeUpdate}
           onTimeUpdate={handleTimeUpdate}
