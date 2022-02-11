@@ -42,6 +42,12 @@ function App() {
     )
     setSongInfo({ ...songInfo, currentTime, duration, animationPercent })
   }
+  async function handleSongEnd() {
+    let currentIndex = songs.findIndex(song => song.id === currentSong.id)
+
+    await setCurrentSong(songs[(currentIndex + 1) % songs.length])
+    if (isPlaying) audioRef.current.play()
+  }
   return (
     <LibraryContext.Provider value={libraryContextValue}>
       <div className="App">
@@ -67,6 +73,7 @@ function App() {
           onTimeUpdate={handleTimeUpdate}
           ref={audioRef}
           src={currentSong.audio}
+          onEnded={handleSongEnd}
         />
       </div>
     </LibraryContext.Provider>

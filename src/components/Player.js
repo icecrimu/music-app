@@ -6,7 +6,6 @@ import {
   faPlay,
   faPause
 } from "@fortawesome/free-solid-svg-icons"
-import { playAudio } from "../Util"
 
 export default function Player(props) {
   const {
@@ -53,17 +52,17 @@ export default function Player(props) {
     audioRef.current.currentTime = e.target.value
     setSongInfo({ ...songInfo, currentTime: e.target.value })
   }
-  function handleSkipTrack(direction) {
+  async function handleSkipTrack(direction) {
     let currentIndex = songs.findIndex(song => song.id === currentSong.id)
 
     if (direction === "skip-back") {
-      setCurrentSong(
+      await setCurrentSong(
         currentIndex === 0 ? songs[songs.length - 1] : songs[currentIndex - 1]
       )
     } else {
-      setCurrentSong(songs[(currentIndex + 1) % songs.length])
+      await setCurrentSong(songs[(currentIndex + 1) % songs.length])
     }
-    playAudio(isPlaying, audioRef)
+    if (isPlaying) audioRef.current.play()
   }
   const trackAnimation = {
     transform: `translateX(${songInfo.animationPercent}%)`

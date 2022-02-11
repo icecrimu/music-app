@@ -1,11 +1,10 @@
 import React, { useContext } from "react"
 import { LibraryContext } from "../App"
-import { playAudio } from "../Util"
 export default function LibrarySong({ song }) {
   const { songs, setSongs, setCurrentSong, audioRef, isPlaying } =
     useContext(LibraryContext)
-  function handleSelectSong() {
-    setCurrentSong(song)
+  async function handleSelectSong() {
+    await setCurrentSong(song)
 
     const newSongs = songs.map(s => {
       if (s.id === song.id) {
@@ -21,7 +20,7 @@ export default function LibrarySong({ song }) {
       }
     })
     setSongs(newSongs)
-    playAudio(isPlaying, audioRef)
+    if (isPlaying) audioRef.current.play()
   }
 
   return (
