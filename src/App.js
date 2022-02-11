@@ -16,7 +16,8 @@ function App() {
 
   const [songInfo, setSongInfo] = useState({
     currentTime: 0,
-    duration: 0
+    duration: 0,
+    animationPercent: 0
   })
 
   const [isPlaying, setIsPlaying] = useState(false)
@@ -34,7 +35,12 @@ function App() {
   function handleTimeUpdate(e) {
     const currentTime = e.target.currentTime
     const duration = e.target.duration
-    setSongInfo({ ...songInfo, currentTime, duration })
+    const roundedCurrentTime = Math.round(currentTime)
+    const roundedDuration = Math.round(duration)
+    const animationPercent = Math.round(
+      (roundedCurrentTime / roundedDuration) * 100
+    )
+    setSongInfo({ ...songInfo, currentTime, duration, animationPercent })
   }
   return (
     <LibraryContext.Provider value={libraryContextValue}>
