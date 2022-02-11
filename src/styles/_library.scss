@@ -6,10 +6,16 @@
   height: 100%;
   box-shadow: 2px 2px 50px rgb(204, 204, 204);
   overflow: scroll;
+  background-color: white;
   transform: translateX(-100%);
   transition: all 0.5s ease;
   opacity: 0;
   h2 {
     padding: 2rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .library {
+    width: 100%;
   }
 }
