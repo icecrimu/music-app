@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { LibraryContext } from "../App"
+import { playAudio } from "../Util"
 export default function LibrarySong({ song }) {
   const { songs, setSongs, setCurrentSong, audioRef, isPlaying } =
     useContext(LibraryContext)
@@ -20,17 +21,7 @@ export default function LibrarySong({ song }) {
       }
     })
     setSongs(newSongs)
-
-    if (isPlaying) {
-      const playPromise = new Promise(resolve => {
-        resolve()
-      })
-      if (isPlaying !== undefined) {
-        playPromise.then(audio => {
-          audioRef.current.play()
-        })
-      }
-    }
+    playAudio(isPlaying, audioRef)
   }
 
   return (
